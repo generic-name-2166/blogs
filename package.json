@@ -1,0 +1,11 @@
+{
+  "name": "blogs",
+  "workspaces": [
+    "blogs-back-end",
+    "blogs-front-end"
+  ],
+  "devDependencies": {
+    "eslint": "^9.17.0",
+    "prettier": "^3.4.2"
+  }
+}

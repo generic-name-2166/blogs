@@ -1,0 +1,30 @@
+{
+  "name": "blogs-back-end",
+  "module": "src/index.ts",
+  "scripts": {
+    "lint": "eslint .",
+    "format": "prettier -w ."
+  },
+  "type": "module",
+  "dependencies": {
+    "@types/express": "^5.0.0",
+    "bcryptjs": "^2.4.3",
+    "express": "^4.21.2",
+    "express-validator": "^7.2.1",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "pg": "^8.13.1",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.20",
+    "typescript-eslint": "^8.19.1"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/multer": "^1.4.12"
+  }
+}
