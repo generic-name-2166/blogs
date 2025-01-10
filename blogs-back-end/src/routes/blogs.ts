@@ -94,7 +94,11 @@ const getSchema: Schema = {
   },
 };
 
-function getBlog(req: Request, res: Response, service: Service): void {
+async function getBlog(
+  req: Request,
+  res: Response,
+  service: Service,
+): Promise<void> {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     res.status(400).send({ errors: errors.array() });
@@ -104,7 +108,7 @@ function getBlog(req: Request, res: Response, service: Service): void {
   const data = matchedData(req);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const id: number = data.id;
-  const blog = service.getBlog(id);
+  const blog = await service.getBlog(id);
   res.send(blog);
 }
 
