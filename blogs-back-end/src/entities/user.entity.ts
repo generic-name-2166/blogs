@@ -11,7 +11,9 @@ import { Blog } from "./blog.entity.ts";
 export class User {
   @PrimaryGeneratedColumn()
   id!: number;
-  @Column()
+  @Column({
+    unique: true,
+  })
   username!: string;
   @Column()
   hashedPassword!: string;

@@ -1,8 +1,4 @@
-import express, {
-  type Request,
-  type Response,
-  type Router,
-} from "express";
+import express, { type Request, type Response, type Router } from "express";
 import {
   checkSchema,
   matchedData,
@@ -98,11 +94,7 @@ const getSchema: Schema = {
   },
 };
 
-function getBlog(
-  req: Request,
-  res: Response,
-  service: Service,
-): void {
+function getBlog(req: Request, res: Response, service: Service): void {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     res.status(400).send({ errors: errors.array() });

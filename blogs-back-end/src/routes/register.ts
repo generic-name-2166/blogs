@@ -14,36 +14,18 @@ import type { Service } from "../service.ts";
 import { generateAccessToken } from "../auth.ts";
 
 const schema: Schema = {
-  name: {
+  username: {
     notEmpty: true,
-    in: "body",
-  },
-  phoneNumber: {
-    isMobilePhone: {
-      options: ["any"],
-    },
-    in: "body",
-  },
-  email: {
-    isEmail: true,
-    normalizeEmail: true,
     in: "body",
   },
   password: {
     notEmpty: true,
     in: "body",
   },
-  referrerId: {
-    optional: true,
-    isInt: true,
-    toInt: true,
-    in: "query",
-  },
 };
 const renewSchema: Schema = {
-  email: {
-    isEmail: true,
-    normalizeEmail: true,
+  username: {
+    notEmpty: true,
     in: "body",
   },
   password: {

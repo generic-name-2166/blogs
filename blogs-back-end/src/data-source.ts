@@ -13,7 +13,7 @@ const appDataSource = new DataSource({
   database: "postgres",
   synchronize: true,
   logging: true,
-  entities: [User],
+  entities: [Blog, User],
   subscribers: [],
   migrations: [],
 });

@@ -14,11 +14,11 @@ export class Blog {
   id!: number;
   @CreateDateColumn()
   createdAt!: Date;
-  @Column()
+  @Column({ nullable: true })
   contents?: string;
-  @Column()
+  @Column({ nullable: true })
   filename?: string;
-  @Column()
+  @Column({ nullable: true })
   isImage?: boolean;
   @ManyToOne(() => User, (user) => user.blogs)
   author!: Relation<User>;
