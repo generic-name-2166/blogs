@@ -91,6 +91,7 @@ const getSchema: Schema = {
   id: {
     isInt: true,
     toInt: true,
+    in: "params",
   },
 };
 
@@ -108,7 +109,7 @@ async function getBlog(
   const data = matchedData(req);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const id: number = data.id;
-  const blog = await service.getBlog(id);
+  const blog = await service.getBlog(id, false);
   res.send(blog);
 }
 
@@ -116,6 +117,12 @@ const putSchema: Schema = {
   id: {
     isInt: true,
     toInt: true,
+    in: "params",
+  },
+  contents: {
+    optional: true,
+    isString: true,
+    in: "body",
   },
 };
 
@@ -145,12 +152,13 @@ async function putBlog(
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const username = res.locals.username;
 
-  const blog = await service.getBlog(id);
-  if (blog?.author.username !== username) {
+  const blog = await service.getBlog(id, true);
+  if (!blog?.author || blog.author.username !== username) {
     res.sendStatus(403);
     return;
   }
-  return service.putBlog(id, contents, filename, isImage);
+  await service.putBlog(id, contents, filename, isImage);
+  res.sendStatus(204);
 }
 
 async function removeBlog(
@@ -169,7 +177,8 @@ async function removeBlog(
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const id: number = data.id;
 
-  return service.deleteBlog(id);
+  await service.deleteBlog(id);
+  res.sendStatus(204);
 }
 
 export default function blogs(service: Service): Router {

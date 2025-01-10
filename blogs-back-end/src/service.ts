@@ -20,7 +20,7 @@ export interface Service {
     filename?: string,
     isImage?: boolean,
   ): Promise<boolean>;
-  getBlog(id: number): Promise<Blog | null>;
+  getBlog(id: number, withAuthor: boolean): Promise<Blog | null>;
   putBlog(
     id: number,
     contents?: string,
@@ -91,8 +91,13 @@ export class RealService implements Service {
     return true;
   }
 
-  getBlog(id: number): Promise<Blog | null> {
-    return this.blogRepository.findOneBy({ id });
+  getBlog(id: number, withAuthor: boolean): Promise<Blog | null> {
+    return withAuthor
+      ? this.blogRepository.findOne({
+          relations: { author: true },
+          where: { id },
+        })
+      : this.blogRepository.findOneBy({ id });
   }
 
   async putBlog(
@@ -101,14 +106,12 @@ export class RealService implements Service {
     filename?: string,
     isImage?: boolean,
   ): Promise<void> {
-    await this.blogRepository.save([
-      {
-        id,
-        contents,
-        filename,
-        isImage,
-      },
-    ]);
+    await this.blogRepository.update(id, {
+      id,
+      contents,
+      filename,
+      isImage,
+    });
   }
 
   async deleteBlog(id: number): Promise<void> {
