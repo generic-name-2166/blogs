@@ -2,7 +2,6 @@ import express, {
   type Request,
   type Response,
   type Router,
-  type Express,
 } from "express";
 import {
   checkSchema,
@@ -75,6 +74,7 @@ async function postBlog(
 
   const data = matchedData(req);
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const contents: string | undefined = data.contents;
   const media = req.file;
   const isImage: boolean | undefined = media
@@ -82,8 +82,10 @@ async function postBlog(
     : undefined;
   const filename: string | undefined = media?.filename;
 
-  const username = res.locals.username;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const username: string = res.locals.username;
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
   (await service.createBlog(username, contents, filename, isImage))
     ? res.sendStatus(201)
     : res.sendStatus(400);
@@ -96,11 +98,11 @@ const getSchema: Schema = {
   },
 };
 
-async function getBlog(
+function getBlog(
   req: Request,
   res: Response,
   service: Service,
-): Promise<void> {
+): void {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     res.status(400).send({ errors: errors.array() });
@@ -108,6 +110,7 @@ async function getBlog(
   }
 
   const data = matchedData(req);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const id: number = data.id;
   const blog = service.getBlog(id);
   res.send(blog);
@@ -133,7 +136,9 @@ async function putBlog(
 
   const data = matchedData(req);
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const id: number = data.id;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const contents: string | undefined = data.contents;
   const media = req.file;
   const isImage: boolean | undefined = media
@@ -141,6 +146,7 @@ async function putBlog(
     : undefined;
   const filename: string | undefined = media?.filename;
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const username = res.locals.username;
 
   const blog = await service.getBlog(id);
@@ -164,6 +170,7 @@ async function removeBlog(
 
   const data = matchedData(req);
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const id: number = data.id;
 
   return service.deleteBlog(id);
