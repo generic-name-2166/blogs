@@ -2,6 +2,10 @@
 
 Full stack app for writing blogs with media. 
 
+Unfortunately, Heroku doesn't provide a free tier anymore. 
+
+And other free hosting platforms either don't offer a relation database (Google Firebase) or don't have a server at all (GitHun Pages). 
+
 ## API endpoints
 
 ### `/api/register`
@@ -123,7 +127,7 @@ docker compose up --build
 
 ### Locally
 
-Requires `node >= 20.6` and [`caddy`](https://caddyserver.com/download)
+Requires `node >= 20.6`, [`caddy`](https://caddyserver.com/download) and `PostgreSQL`. 
 
 ```bash
 cd blogs-front-end
@@ -148,4 +152,8 @@ This project uses
 - `multer`
 - `react`
 - `vite`
+- `typeorm`
+- `typescript`
+- `eslint`
+- `prettier`
 - and other packages
