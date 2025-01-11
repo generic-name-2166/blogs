@@ -1,0 +1,40 @@
+services:
+  blogs_back:
+    image: blogs-back
+    pull_policy: never
+    container_name: blogs-back
+    build:
+      context: ./blogs-back-end/
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgres
+    volumes:
+      - media_volume:/app/media
+  
+  blogs_front:
+    image: blogs-front
+    pull_policy: never
+    container_name: blogs-front
+    build:
+      context: ./blogs-front-end/
+      dockerfile: Dockerfile
+      target: runner
+    ports: 
+      - 8443:8443
+    volumes:
+      - media_volume:/app/media:ro
+
+  postgres:
+    image: postgres:17-alpine
+    container_name: blogs-postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./blogs-back-end/pginit:/docker-entrypoint-initdb.d:ro
+
+volumes:
+  pgdata:
+  media_volume:

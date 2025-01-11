@@ -125,6 +125,8 @@ curl --request DELETE \
 docker compose up --build
 ```
 
+and go to http://localhost:8443/
+
 ### Locally
 
 Requires `node >= 20.6`, [`caddy`](https://caddyserver.com/download) and `PostgreSQL`. 

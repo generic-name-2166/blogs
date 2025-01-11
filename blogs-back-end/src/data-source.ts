@@ -6,13 +6,13 @@ import { Blog } from "./entities/blog.entity.ts";
 
 const appDataSource = new DataSource({
   type: "postgres",
-  host: "localhost",
+  host: process.env["POSTGRES_HOST"] ?? "localhost",
   port: 5432,
   username: "postgres",
   password: "postgres",
   database: "blogs",
   synchronize: true,
-  logging: false,
+  logging: true,
   entities: [Blog, User],
   subscribers: [],
   migrations: [],

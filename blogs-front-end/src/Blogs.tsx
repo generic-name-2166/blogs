@@ -26,7 +26,7 @@ function handleRemove(id: number): MouseEventHandler {
     if (!headers) {
       return;
     }
-    await fetch(`/api/blogs/${id}`, { method: "DELETE", headers });
+    const response = await fetch(`/api/blogs/${id}`, { method: "DELETE", headers });
   };
 }
 

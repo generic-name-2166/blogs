@@ -1,0 +1,23 @@
+# Prod
+
+:8443 
+
+handle {
+  root ./dist
+  # serve /blog.html as /blog
+  try_files {path} {path}/ {path}.html
+  file_server {
+    precompressed zstd br gzip
+  }
+}
+
+handle /api*  {
+  reverse_proxy blogs-back:3000
+}
+
+handle_path /media* {
+  root ./media
+  file_server {
+    precompressed zstd br gzip
+  }
+}
