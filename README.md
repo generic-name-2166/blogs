@@ -115,11 +115,25 @@ curl --request DELETE \
 
 ## How to build
 
+### Docker
+
 ```bash
-cd blogs-front-end
-npm run build
-cd ../blogs-back-end
-npm run preview
+docker compose up --build
 ```
 
-and go to http://localhost:3000/
+### Locally
+
+Requires `node >= 20.6` and [`caddy`](https://caddyserver.com/download)
+
+```bash
+cd blogs-front-end
+npm install
+npm run build
+cd ../blogs-back-end
+npm install
+npm run start
+# In another terminal
+./caddy run
+```
+
+and go to http://localhost:8443/

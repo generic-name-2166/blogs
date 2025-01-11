@@ -4,4 +4,7 @@ bun.lockb
 node_modules/
 
 dist/
-media/
+blogs-back-end/media/*
+!blogs-back-end/media/file.txt
+
+*.exe

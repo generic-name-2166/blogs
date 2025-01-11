@@ -1,0 +1,21 @@
+:8443 
+
+handle {
+  root ./blogs-front-end/dist
+  # serve /blog.html as /blog
+  try_files {path} {path}/ {path}.html
+  file_server {
+    precompressed zstd br gzip
+  }
+}
+
+handle /api*  {
+  reverse_proxy localhost:3000
+}
+
+handle_path /media* {
+  root ./blogs-back-end/media
+  file_server {
+    precompressed zstd br gzip
+  }
+}

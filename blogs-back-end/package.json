@@ -3,11 +3,13 @@
   "module": "src/index.ts",
   "scripts": {
     "dev": "bun src/index.ts",
+    "start": "node --import @swc-node/register/esm-register src/index.ts",
     "lint": "eslint .",
     "format": "prettier -w ."
   },
   "type": "module",
   "dependencies": {
+    "@swc-node/register": "^1.10.9",
     "@types/express": "^5.0.0",
     "bcryptjs": "^2.4.3",
     "express": "^4.21.2",

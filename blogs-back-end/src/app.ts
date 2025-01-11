@@ -16,8 +16,5 @@ export default function initialize(service: Service): Application {
   router.use("/blogs", blogs(service));
   app.use("/api", router);
 
-  app.use("/media", express.static("media"));
-  app.use(express.static("../blogs-front-end/dist"));
-
   return app;
 }
