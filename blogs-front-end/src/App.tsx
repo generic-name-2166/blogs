@@ -1,6 +1,7 @@
 import { type JSX, useEffect, useState } from "react";
 import "./App.css";
 import Header from "./Header.tsx";
+import Create from "./Create.tsx";
 
 export interface Blog {
   id: number;
@@ -36,6 +37,7 @@ export default function App(): JSX.Element {
           ))}
         </ul>
       )}
+      <Create />
     </div>
   );
 }

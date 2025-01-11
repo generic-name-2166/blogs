@@ -90,6 +90,9 @@ function LogIn(): JSX.Element {
           <label htmlFor={tokenId}>Auth token (optional)</label>
           <input id={tokenId} type="password" minLength={1} name="token" />
 
+          <button type="button" onClick={close}>
+            Cancel
+          </button>
           <button type="submit">Submit</button>
 
           {error && (
@@ -106,7 +109,9 @@ function LogIn(): JSX.Element {
 export default function Header(): JSX.Element {
   return (
     <header>
-      <h1>Blogs</h1>
+      <h1>
+        <a href="/">Blogs</a>
+      </h1>
 
       <div>
         <LogIn />
