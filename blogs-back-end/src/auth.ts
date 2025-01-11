@@ -17,8 +17,9 @@ export function hashPassword(password: string): Promise<string> {
 const secret =
   "4a29d888ad4b04b6a627fd650ae1126beecd2b36771e1c1b835b35a318d20300";
 
-export function generateAccessToken(email: string): string {
-  return jwt.sign({ sub: email }, secret, { expiresIn: "1h" });
+export function generateAccessToken(username: string): string {
+  const token = jwt.sign({ username }, secret, { expiresIn: "1h" });
+  return token;
 }
 
 export function authenticateToken(
@@ -34,16 +35,15 @@ export function authenticateToken(
     return;
   }
 
-  jwt.verify(token, secret, (err, username) => {
-    if (err) {
-      console.error(err);
-      return res.sendStatus(403);
-    } else if (username === undefined || typeof username === "string") {
-      console.error(username);
-      return res.sendStatus(400);
-    }
-    res.locals.username = username.sub;
-
+  try {
+    const decoded = jwt.verify(token, secret);
+    //@ts-expect-error decoded is a json string
+    const username = decoded.username as string;
+    res.locals.username = username;
     next();
-  });
+  } catch (e) {
+    console.error(e);
+    res.sendStatus(403);
+    return;
+  }
 }

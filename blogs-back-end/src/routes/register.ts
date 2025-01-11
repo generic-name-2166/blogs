@@ -73,11 +73,11 @@ async function renewUser(
 
   const data = matchedData(req);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const email: string = data.email;
+  const username: string = data.username;
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const password: string = data.password;
 
-  const token: string | null = await service.signIn(email, password);
+  const token: string | null = await service.signIn(username, password);
 
   if (token === null) {
     return res.status(401).send({ error: "incorrect email or password" });
