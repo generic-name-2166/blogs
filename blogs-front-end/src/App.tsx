@@ -4,6 +4,7 @@ import Header from "./Header.tsx";
 
 export interface Blog {
   id: number;
+  createdAt: string;
   contents?: string;
   filename?: string;
   isImage?: boolean;
