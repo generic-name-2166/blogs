@@ -51,7 +51,7 @@ async function createUser(
   const password: string = data.password;
 
   if ((await service.getIdByName(username)) !== undefined) {
-    return res.status(403).send("this email is already in use");
+    return res.status(403).send({ error: "this username is already in use" });
   }
 
   await service.postUser(username, password);
@@ -66,6 +66,7 @@ async function renewUser(
   res: Response,
   service: Service,
 ): Promise<Response> {
+  console.log(req.body);
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).send({ errors: errors.array() });
@@ -80,7 +81,7 @@ async function renewUser(
   const token: string | null = await service.signIn(email, password);
 
   if (token === null) {
-    return res.status(401).send("incorrect email or password");
+    return res.status(401).send({ error: "incorrect email or password" });
   }
 
   return res.status(200).send(token);
