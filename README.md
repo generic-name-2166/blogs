@@ -137,3 +137,15 @@ npm run start
 ```
 
 and go to http://localhost:8443/
+
+## Notice
+
+This project is licenced under Apache 2.0. 
+
+This project uses
+- `express`
+- `express-validator`
+- `multer`
+- `react`
+- `vite`
+- and other packages
