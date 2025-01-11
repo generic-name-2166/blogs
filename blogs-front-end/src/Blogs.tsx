@@ -21,12 +21,15 @@ function Video({ filename }: { filename: string }): JSX.Element {
 }
 
 function handleRemove(id: number): MouseEventHandler {
-  return async (): Promise<void> => {
+  return async (event): Promise<void> => {
+    // Otherwise the link unloads the page and the delete request
+    event.preventDefault();
     const headers = setAuth(localStorage.getItem("bearer"));
     if (!headers) {
       return;
     }
-    const response = await fetch(`/api/blogs/${id}`, { method: "DELETE", headers });
+    await fetch(`/api/blogs/${id}`, { method: "DELETE", headers });
+    location.href = (event.target as HTMLAnchorElement).href;
   };
 }
 
