@@ -15,9 +15,26 @@ async function getAllBlogs(res: Response, service: Service): Promise<void> {
   res.send(blogs);
 }
 
+const imageMimeTypes = [
+  "image/jpeg",
+  "image/png",
+  "image/gif",
+  "image/bmp",
+  "image/webp",
+];
+const videoMimeTypes = [
+  "video/mp4",
+  "video/quicktime",
+  "video/x-msvideo",
+  "video/x-flv",
+  "video/x-m4v",
+];
+const allowedMimeTypes = imageMimeTypes.concat(videoMimeTypes);
+
 const upload = multer({
   storage: multer.diskStorage({
     destination(_req, _file, cb) {
+      // Despite what the docs say, multer does not create the media folder by itself
       cb(null, "./media");
     },
     filename(_req, file, cb) {
@@ -40,22 +57,6 @@ const postSchema: Schema = {
     in: "body",
   },
 };
-
-const imageMimeTypes = [
-  "image/jpeg",
-  "image/png",
-  "image/gif",
-  "image/bmp",
-  "image/webp",
-];
-const videoMimeTypes = [
-  "video/mp4",
-  "video/quicktime",
-  "video/x-msvideo",
-  "video/x-flv",
-  "video/x-m4v",
-];
-const allowedMimeTypes = imageMimeTypes.concat(videoMimeTypes);
 
 async function postBlog(
   req: Request,

@@ -4,3 +4,4 @@ bun.lockb
 node_modules/
 
 dist/
+media/

@@ -66,7 +66,6 @@ async function renewUser(
   res: Response,
   service: Service,
 ): Promise<Response> {
-  console.log(req.body);
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).send({ errors: errors.array() });
