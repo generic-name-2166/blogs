@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import * as bcrypt from "bcryptjs";
+import bcrypt from "bcryptjs";
 
 // using bcryptjs because bcrypt's dependencies don't play well with esbuild
 
