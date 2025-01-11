@@ -10,6 +10,7 @@ import { setAuth } from "./util.ts";
 
 function handleSubmit(
   close: () => void,
+  method: string,
   setError: (error: string) => void,
 ): FormEventHandler<HTMLFormElement> {
   return async (event: FormEvent<HTMLFormElement>) => {
@@ -17,7 +18,6 @@ function handleSubmit(
     const form = event.target as HTMLFormElement;
     const body = new FormData(form);
 
-    const method: string = form.method;
     const action: string = form.action;
     const bearer: string | null = localStorage.getItem("bearer");
     const headers: HeadersInit | undefined = setAuth(bearer);
@@ -32,7 +32,12 @@ function handleSubmit(
       body,
     });
     if (!response.ok) {
-      const text = JSON.stringify(await response.json(), undefined, 2);
+      let text = "";
+      try {
+        text = JSON.stringify(await response.json(), undefined, 2);
+      } catch {
+        /* empty */
+      }
       setError(`${response.status} ${response.statusText}\n${text}`);
       return;
     }
@@ -40,7 +45,15 @@ function handleSubmit(
   };
 }
 
-export default function Create(): JSX.Element {
+export default function Create({
+  action,
+  method,
+  children,
+}: {
+  action: string;
+  method: string;
+  children: React.ReactNode;
+}): JSX.Element {
   const dialog = useRef<HTMLDialogElement>(null);
 
   const [error, setError] = useState("");
@@ -48,7 +61,7 @@ export default function Create(): JSX.Element {
   const open = () => dialog.current?.showModal();
   const close = () => dialog.current?.close();
 
-  const submit = handleSubmit(close, setError);
+  const submit = handleSubmit(close, method, setError);
 
   const contentsId = useId();
   const mediaId = useId();
@@ -56,10 +69,10 @@ export default function Create(): JSX.Element {
   return (
     <>
       <button type="button" onClick={open}>
-        Create blog
+        {children}
       </button>
       <dialog ref={dialog}>
-        <form method="POST" action="/api/blogs" onSubmit={submit}>
+        <form action={action} onSubmit={submit}>
           <label htmlFor={contentsId}>Contents</label>
           <input id={contentsId} minLength={1} type="text" name="contents" />
           <label htmlFor={mediaId}>Image or video</label>

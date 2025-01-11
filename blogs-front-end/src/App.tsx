@@ -37,7 +37,9 @@ export default function App(): JSX.Element {
           ))}
         </ul>
       )}
-      <Create />
+      <Create method="POST" action="/api/blogs">
+        Create blog
+      </Create>
     </div>
   );
 }

@@ -1,6 +1,9 @@
-import { useEffect, useState, type JSX } from "react";
+import { type MouseEventHandler, useEffect, useState, type JSX } from "react";
 import Header from "./Header.tsx";
 import { Blog } from "./App.tsx";
+import { setAuth } from "./util.ts";
+import "./Blogs.css";
+import Create from "./Create.tsx";
 
 function Image({ filename }: { filename: string }): JSX.Element {
   const src = `/media/${filename}`;
@@ -17,6 +20,16 @@ function Video({ filename }: { filename: string }): JSX.Element {
   );
 }
 
+function handleRemove(id: number): MouseEventHandler {
+  return async (): Promise<void> => {
+    const headers = setAuth(localStorage.getItem("bearer"));
+    if (!headers) {
+      return;
+    }
+    await fetch(`/api/blogs/${id}`, { method: "DELETE", headers });
+  };
+}
+
 export default function Blogs(): JSX.Element {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
@@ -24,13 +37,17 @@ export default function Blogs(): JSX.Element {
 
   const [blog, setBlog] = useState<Blog | null>(null);
 
+  const action = `/api/blogs/${id}`;
+
   useEffect(() => {
-    fetch(`/api/blogs/${id}`, {
+    fetch(action, {
       method: "GET",
     })
       .then((res) => res.json())
       .then(setBlog);
-  }, [id]);
+  }, [id, action]);
+
+  const remove = handleRemove(id);
 
   return (
     <div>
@@ -50,8 +67,12 @@ export default function Blogs(): JSX.Element {
         )}
 
         <div>
-          <button type="button">Edit</button>
-          <button type="button">Delete</button>
+          <Create method="PUT" action={action}>
+            Edit
+          </Create>
+          <a href="/" onClick={remove}>
+            Delete
+          </a>
         </div>
       </main>
     </div>
